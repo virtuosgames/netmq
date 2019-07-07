@@ -19,6 +19,9 @@ namespace NetMQ
     [SuppressMessage("ReSharper", "UnusedMethodReturnValue.Global")]
     public static class AsyncReceiveExtensions
     {
+        static Task<bool> s_trueTask = Task.FromResult(true);
+        static Task<bool> s_falseTask = Task.FromResult(false);
+        
         #region Receiving frames as a multipart message
 
         /// <summary>
@@ -322,7 +325,8 @@ namespace NetMQ
             {
                 bool more = msg.HasMore;
                 msg.Close();
-                return Task.FromResult(more);
+
+                return more ? s_trueTask : s_falseTask;
             }
 
             TaskCompletionSource<bool> source = new TaskCompletionSource<bool>();
