@@ -9,9 +9,6 @@
     <TargetFrameworks>net40;net47;netstandard1.6;netstandard2.0</TargetFrameworks>
     <DebugType>portable</DebugType>
     <AssemblyName>NetMQ</AssemblyName>
-    <AssemblyOriginatorKeyFile>./NetMQ.snk</AssemblyOriginatorKeyFile>
-    <SignAssembly>true</SignAssembly>
-    <PublicSign Condition=" '$(OS)' != 'Windows_NT' ">true</PublicSign>
     <PackageId>Planetarium.NetMQ</PackageId>
     <PackageTags>ZeroMQ;0MQ;CLRZMQ;NetMQ;Messaging;ZMQ;transport;distributed</PackageTags>
     <PackageIconUrl>https://raw.githubusercontent.com/zeromq/netmq/master/img/NetMQ.ico</PackageIconUrl>
