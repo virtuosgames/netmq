@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Description>A 100% native C# port of the lightweight high performance messaging library ZeroMQ</Description>
-    <AssemblyTitle>NetMQ</AssemblyTitle>
+    <Description>A 100% native C# port of the lightweight high performance messaging library ZeroMQ (Planetarium fork)</Description>
+    <AssemblyTitle>Planetarium.NetMQ</AssemblyTitle>
     <Version>4.0.0.0</Version>
     <PackageVersion>4.0.0.0</PackageVersion>
     <!--monoandroid60;xamarinios10-->
@@ -12,13 +12,13 @@
     <AssemblyOriginatorKeyFile>./NetMQ.snk</AssemblyOriginatorKeyFile>
     <SignAssembly>true</SignAssembly>
     <PublicSign Condition=" '$(OS)' != 'Windows_NT' ">true</PublicSign>
-    <PackageId>NetMQ</PackageId>
+    <PackageId>Planetarium.NetMQ</PackageId>
     <PackageTags>ZeroMQ;0MQ;CLRZMQ;NetMQ;Messaging;ZMQ;transport;distributed</PackageTags>
     <PackageIconUrl>https://raw.githubusercontent.com/zeromq/netmq/master/img/NetMQ.ico</PackageIconUrl>
-    <PackageProjectUrl>https://github.com/zeromq/netmq</PackageProjectUrl>
-    <PackageLicenseUrl>https://github.com/zeromq/netmq/blob/master/COPYING.LESSER</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/planetairum/netmq</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/planetarium/netmq/blob/master/COPYING.LESSER</PackageLicenseUrl>
     <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/zeromq/netmq</RepositoryUrl>
+    <RepositoryUrl>https://github.com/planetarium/netmq</RepositoryUrl>
     <PackageTargetFallback Condition=" '$(TargetFramework)' == 'netstandard1.6' ">$(PackageTargetFallback);dnxcore50</PackageTargetFallback>
     <NetStandardImplicitPackageVersion Condition=" '$(TargetFramework)' == 'netstandard1.6' ">1.6.0</NetStandardImplicitPackageVersion>
     <PackageTargetFallback Condition=" '$(TargetFramework)' == 'uap10.0' ">$(PackageTargetFallback);dnxcore50</PackageTargetFallback>
