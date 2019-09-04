@@ -54,6 +54,125 @@ namespace NetMQ
 
         #endregion
 
+        #region Sending a frame
+        [NotNull]
+        public static Task SendFrameAsync(
+            [NotNull] this NetMQSocket socket,
+            [NotNull] byte[] data,
+            bool more = false,
+            CancellationToken cancellationToken = default(CancellationToken)
+        )
+        {
+            if (NetMQRuntime.Current == null)
+                throw new InvalidOperationException("NetMQRuntime must be created before calling async functions");
+
+            if (data == null)
+                throw new ArgumentNullException(nameof(data));
+
+            socket.AttachToRuntime();
+
+            if (socket.TrySendFrame(TimeSpan.Zero, data, more))
+            {
+                return Task.CompletedTask;
+            }
+
+            TaskCompletionSource<object> source = new TaskCompletionSource<object>();
+            cancellationToken.Register(() => source.SetCanceled());
+            
+            void Listener(object sender, NetMQSocketEventArgs args)
+            {
+                if (socket.TrySendFrame(TimeSpan.Zero, data, more))
+                {
+                    socket.SendReady -= Listener;
+                    source.SetResult(null);
+                }
+            }
+
+            socket.SendReady += Listener;
+
+            return source.Task;
+        }
+
+        
+        [NotNull]
+        public static Task SendFrameAsync(
+            [NotNull] this NetMQSocket socket,
+            [NotNull] string message,
+            bool more = false,
+            CancellationToken cancellationToken = default(CancellationToken)
+        )
+        {
+            if (NetMQRuntime.Current == null)
+                throw new InvalidOperationException("NetMQRuntime must be created before calling async functions");
+
+            if (message == null)
+                throw new ArgumentNullException(nameof(message));
+
+            socket.AttachToRuntime();
+
+            if (socket.TrySendFrame(TimeSpan.Zero, message, more))
+            {
+                return Task.CompletedTask;
+            }
+
+            TaskCompletionSource<object> source = new TaskCompletionSource<object>();
+            cancellationToken.Register(() => source.SetCanceled());
+            
+            void Listener(object sender, NetMQSocketEventArgs args)
+            {
+                if (socket.TrySendFrame(TimeSpan.Zero, message, more))
+                {
+                    socket.SendReady -= Listener;
+                    source.SetResult(null);
+                }
+            }
+
+            socket.SendReady += Listener;
+
+            return source.Task;
+        }
+        #endregion
+        
+        #region Sending a multipart message
+        [NotNull]
+        public static Task SendMultipartMessageAsync(
+            [NotNull] this NetMQSocket socket,
+            [NotNull] NetMQMessage message,
+            bool more = false,
+            CancellationToken cancellationToken = default(CancellationToken)
+        )
+        {
+            if (NetMQRuntime.Current == null)
+                throw new InvalidOperationException("NetMQRuntime must be created before calling async functions");
+
+            if (message == null)
+                throw new ArgumentNullException(nameof(message));
+
+            socket.AttachToRuntime();
+
+            if (socket.TrySendMultipartMessage(TimeSpan.Zero, message))
+            {
+                return Task.CompletedTask;
+            }
+
+            TaskCompletionSource<object> source = new TaskCompletionSource<object>();
+            cancellationToken.Register(() => source.SetCanceled());
+            
+            void Listener(object sender, NetMQSocketEventArgs args)
+            {
+                if (socket.TrySendMultipartMessage(TimeSpan.Zero, message))
+                {
+                    socket.SendReady -= Listener;
+                    source.SetResult(null);
+                }
+            }
+
+            socket.SendReady += Listener;
+
+            return source.Task;
+        }
+        #endregion
+
         #region Receiving a frame as a byte array
 
         /// <summary>
