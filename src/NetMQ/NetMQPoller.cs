@@ -104,13 +104,9 @@ namespace NetMQ
         {
             if (task == null)
                 throw new ArgumentNullException(nameof(task));
-            CheckDisposed();
 
-            // We are not allowing new tasks will disposing
-            if (m_disposeState == (int)DisposeState.Disposing)
-                throw new ObjectDisposedException("NetMQPoller");
-
-            m_tasksQueue.Enqueue(task);
+            if (m_disposeState == (int)DisposeState.Undisposed)
+                m_tasksQueue.Enqueue(task);
         }
 
         public void Run([NotNull] Action action)
