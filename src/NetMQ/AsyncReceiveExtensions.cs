@@ -80,14 +80,18 @@ namespace NetMQ
             }
 
             TaskCompletionSource<object> source = new TaskCompletionSource<object>();
-            cancellationToken.Register(() => source.SetCanceled());
+            cancellationToken.Register(() => 
+            {
+                socket.SendReady -= Listener;
+                source.TrySetCanceled();
+            });
             
             void Listener(object sender, NetMQSocketEventArgs args)
             {
                 if (socket.TrySendFrame(TimeSpan.Zero, data, more))
                 {
                     socket.SendReady -= Listener;
-                    source.SetResult(null);
+                    source.TrySetResult(null);
                 }
             }
 
@@ -119,14 +123,18 @@ namespace NetMQ
             }
 
             TaskCompletionSource<object> source = new TaskCompletionSource<object>();
-            cancellationToken.Register(() => source.SetCanceled());
+            cancellationToken.Register(() => 
+            { 
+                socket.SendReady -= Listener;
+                source.TrySetCanceled();
+            });
             
             void Listener(object sender, NetMQSocketEventArgs args)
             {
                 if (socket.TrySendFrame(TimeSpan.Zero, message, more))
                 {
                     socket.SendReady -= Listener;
-                    source.SetResult(null);
+                    source.TrySetResult(null);
                 }
             }
 
@@ -159,7 +167,11 @@ namespace NetMQ
             }
 
             TaskCompletionSource<object> source = new TaskCompletionSource<object>();
-            cancellationToken.Register(() => source.SetCanceled());
+            cancellationToken.Register(() => 
+            { 
+                socket.SendReady -= Listener;
+                source.TrySetCanceled();
+            });
             
             void Listener(object sender, NetMQSocketEventArgs args)
             {
@@ -208,7 +220,11 @@ namespace NetMQ
             }
 
             TaskCompletionSource<(byte[], bool)> source = new TaskCompletionSource<(byte[], bool)>();
-            cancellationToken.Register(() => source.SetCanceled());
+            cancellationToken.Register(() => 
+            { 
+                socket.ReceiveReady -=  Listener;
+                source.TrySetCanceled();
+            });
 
             void Listener(object sender, NetMQSocketEventArgs args)
             {
@@ -219,7 +235,7 @@ namespace NetMQ
                     msg.Close();
 
                     socket.ReceiveReady -=  Listener;
-                    source.SetResult((data, more));
+                    source.TrySetResult((data, more));
                 }
             }
 
@@ -280,7 +296,11 @@ namespace NetMQ
             }
 
             TaskCompletionSource<(string, bool)> source = new TaskCompletionSource<(string,bool)>();
-            cancellationToken.Register(() => source.SetCanceled());
+            cancellationToken.Register(() => 
+            { 
+                socket.ReceiveReady -= Listener;
+                source.TrySetCanceled();
+            });
 
             void Listener(object sender, NetMQSocketEventArgs args)
             {
@@ -292,8 +312,8 @@ namespace NetMQ
                     bool more = msg.HasMore;
 
                     msg.Close();
-                    socket.ReceiveReady -=  Listener;
-                    source.SetResult((str, more));
+                    socket.ReceiveReady -= Listener;
+                    source.TrySetResult((str, more));
                 }
             }
 
