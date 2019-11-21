@@ -79,7 +79,8 @@ namespace NetMQ
         {
             if (task == null)
                 throw new ArgumentNullException(nameof(task));
-            CheckDisposed();
+            if (IsDisposed)
+                return false;
 
             return CanExecuteTaskInline && TryExecuteTask(task);
         }
@@ -103,13 +104,9 @@ namespace NetMQ
         {
             if (task == null)
                 throw new ArgumentNullException(nameof(task));
-            CheckDisposed();
 
-            // We are not allowing new tasks will disposing
-            if (m_disposeState == (int)DisposeState.Disposing)
-                throw new ObjectDisposedException("NetMQPoller");
-
-            m_tasksQueue.Enqueue(task);
+            if (m_disposeState == (int)DisposeState.Undisposed)
+                m_tasksQueue.Enqueue(task);
         }
 
         public void Run([NotNull] Action action)
@@ -685,8 +682,10 @@ namespace NetMQ
                 Debug.Assert(!IsRunning);
             }
 
+            m_sockets.Remove(((ISocketPollable)m_stopSignaler).Socket);
             m_stopSignaler.Dispose();
 #if !NET35
+            m_sockets.Remove(((ISocketPollable)m_tasksQueue).Socket);
             m_tasksQueue.Dispose();
 #endif
 
