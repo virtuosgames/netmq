@@ -1,19 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Description>A 100% native C# port of the lightweight high performance messaging library ZeroMQ</Description>
+    <Description>A 100% native C# port of the lightweight high performance messaging library ZeroMQ (Planetarium fork)</Description>
     <Version>4.0.0.0</Version>
     <TargetFrameworks>net45;net47;netstandard2.0;netstandard2.1</TargetFrameworks>
     <DebugType>portable</DebugType>
-    <AssemblyOriginatorKeyFile>./NetMQ.snk</AssemblyOriginatorKeyFile>
-    <SignAssembly>true</SignAssembly>
-    <PublicSign Condition=" '$(OS)' != 'Windows_NT' ">true</PublicSign>
+    <PackageId>Planetarium.NetMQ</PackageId>
     <PackageTags>ZeroMQ;0MQ;CLRZMQ;NetMQ;Messaging;ZMQ;transport;distributed</PackageTags>
     <PackageIcon>NetMQLogoSquare-256px.png</PackageIcon>
-    <PackageProjectUrl>https://github.com/zeromq/netmq</PackageProjectUrl>
-    <PackageLicenseUrl>https://github.com/zeromq/netmq/blob/master/COPYING.LESSER</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/planetarium/netmq</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/planetarium/netmq/blob/master/COPYING.LESSER</PackageLicenseUrl>
     <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/zeromq/netmq.git</RepositoryUrl>
+    <RepositoryUrl>https://github.com/planetarium/netmq.git</RepositoryUrl>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <Deterministic>true</Deterministic>
     <DeterministicSourcePaths>true</DeterministicSourcePaths>
