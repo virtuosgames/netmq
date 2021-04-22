@@ -87,7 +87,7 @@ namespace NetMQ.Tests
         {
             var expected = m_socket.PushFrame("Hello");
 
-            Assert.True(m_socket.TryReceiveFrameBytes(out byte[] actual));
+            Assert.True(m_socket.TryReceiveFrameBytes(out byte[]? actual));
 
             Assert.Equal(TimeSpan.Zero, m_socket.LastTimeout);
             Assert.True(actual.SequenceEqual(expected));
@@ -105,7 +105,7 @@ namespace NetMQ.Tests
             var expected1 = m_socket.PushFrame("Hello");
             var expected2 = m_socket.PushFrame("World");
 
-            Assert.True(m_socket.TryReceiveFrameBytes(out byte[] actual, out bool more));
+            Assert.True(m_socket.TryReceiveFrameBytes(out byte[]? actual, out bool more));
 
             Assert.Equal(TimeSpan.Zero, m_socket.LastTimeout);
             Assert.True(actual.SequenceEqual(expected1));

@@ -1,6 +1,6 @@
 <img src="https://cdn.rawgit.com/zeromq/netmq/master/img/NetMQLogo.svg" width="350" />
 
-[![NetMQ AppVeyor Build](https://ci.appveyor.com/api/projects/status/as5fiw8a3suw53iu/branch/master?svg=true)](https://ci.appveyor.com/project/somdoron/netmq-2bhss) [![NetMQ NuGet version](https://img.shields.io/nuget/v/NetMQ.svg)](https://www.nuget.org/packages/NetMQ/) [![NetMQ NuGet prerelease version](https://img.shields.io/nuget/vpre/NetMQ.svg)](https://www.nuget.org/packages/NetMQ/)
+[![NetMQ AppVeyor Build](https://ci.appveyor.com/api/projects/status/as5fiw8a3suw53iu/branch/master?svg=true)](https://ci.appveyor.com/project/somdoron/netmq-2bhss) [![codecov](https://codecov.io/gh/zeromq/netmq/branch/master/graph/badge.svg)](https://codecov.io/gh/zeromq/netmq) [![NetMQ NuGet version](https://img.shields.io/nuget/v/NetMQ.svg)](https://www.nuget.org/packages/NetMQ/) [![NetMQ NuGet prerelease version](https://img.shields.io/nuget/vpre/NetMQ.svg)](https://www.nuget.org/packages/NetMQ/)
 
 NetMQ is a 100% native C# port of the lightweight messaging library ZeroMQ.
 
@@ -25,7 +25,7 @@ This repository is for version 4, for version 3 go to: https://github.com/NetMQ/
 
 ## Using / Documentation
 
-Before using NetMQ, make sure to read the [ZeroMQ Guide](http://zguide.zeromq.org/page:all).
+Before using NetMQ, make sure to read the [ZeroMQ Guide](http://zguide.zeromq.org/).
 
 The NetMQ documentation can be found at [netmq.readthedocs.org](http://netmq.readthedocs.org/en/latest/). Thanks to [Sacha Barber](http://www.codeproject.com/Members/Sacha-Barber) who agreed to do the documentation.
 
@@ -105,10 +105,6 @@ There are open issues in the issues tab that still need to be taken care of, fee
 
 ## Build Server
 
-[TeamCity at CodeBetter](http://teamcity.codebetter.com/project.html?projectId=project372&tab=projectOverview)
-
 ![Code Better](http://www.jetbrains.com/img/banners/Codebetter300x250.png)
 
 [YouTrack by JetBrains - keyboard-centric bug tracker](http://www.jetbrains.com/youtrack)
-
-[TeamCity by JetBrains - continuous integration server](http://www.jetbrains.com/teamcity)

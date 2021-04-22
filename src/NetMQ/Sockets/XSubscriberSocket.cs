@@ -16,7 +16,7 @@ namespace NetMQ.Sockets
         /// <param name="connectionString">List of NetMQ endpoints, separated by commas and prefixed by '@' (to bind the socket) or '>' (to connect the socket).
         /// Default action is connect (if endpoint doesn't start with '@' or '>')</param>
         /// <example><code>var socket = new XSubscriberSocket(">tcp://127.0.0.1:5555,@tcp://127.0.0.1:55556");</code></example>
-        public XSubscriberSocket(string connectionString = null) : base(ZmqSocketType.Xsub, connectionString, DefaultAction.Connect)
+        public XSubscriberSocket(string? connectionString = null) : base(ZmqSocketType.Xsub, connectionString, DefaultAction.Connect)
         {
         }
 

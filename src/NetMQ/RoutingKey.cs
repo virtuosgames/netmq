@@ -6,9 +6,9 @@ namespace NetMQ
     /// Structure to represent a routing key from Router, Peer and Stream sockets.
     /// Implement Equals and GetHashCode and can be used as key for a Dictionary.
     /// </summary>
-    public struct RoutingKey: IEquatable<RoutingKey>, IEquatable<byte[]>
+    public readonly struct RoutingKey : IEquatable<RoutingKey>, IEquatable<byte[]>
     {
-        private byte[] bytes;
+        private readonly byte[] bytes;
 
         private const uint C1 = 0xcc9e2d51;
         private const uint C2 = 0x1b873593;
@@ -29,6 +29,15 @@ namespace NetMQ
         public RoutingKey(string b64)
         {
             bytes = Convert.FromBase64String(b64);
+        }
+
+        /// <summary>
+        /// Create a new routing key out of a Int64
+        /// </summary>
+        /// <param name="value"></param>
+        public RoutingKey(long value)
+        {
+            bytes = NetworkOrderBitsConverter.GetBytes(value);
         }
 
         internal byte[] Bytes
@@ -101,7 +110,6 @@ namespace NetMQ
         /// <summary>
         /// Return a numeric hashcode of the given byte-array.
         /// </summary>
-        /// <param name="data">the given byte-array to compute the hashcode of</param>
         /// <returns>an integer that contains a hashcode computed over the byte-array</returns>
         public override int GetHashCode()
         {
