@@ -17,14 +17,14 @@ namespace NetMQ.Tests
         }
 
         [Fact]
-        public void Receive()
+        public void SendReceive()
         {
-            async Task ReceiveAsync()
+            async Task SendReceiveAsync()
             {
                 using (var server = new RouterSocket("inproc://async"))
                 using (var client = new DealerSocket("inproc://async"))
                 {
-                    client.SendFrame("Hello");
+                    await client.SendFrameAsync("Hello");
 
                     var (routingKey, _) = await server.ReceiveRoutingKeyAsync();
                     var (message, _) = await server.ReceiveFrameStringAsync();
@@ -42,7 +42,7 @@ namespace NetMQ.Tests
 
             using (var runtime = new NetMQRuntime())
             {
-                var t = ReceiveAsync();
+                var t = SendReceiveAsync();
                 runtime.Run(t);
 
                 if (t.IsFaulted && t.Exception is AggregateException exc)
@@ -53,9 +53,9 @@ namespace NetMQ.Tests
         }
         
         [Fact]
-        public void ReceiveMultipartMessage()
+        public void SendReceiveMultipartMessage()
         {
-            async Task ReceiveAsync()
+            async Task SendReceiveAsync()
             {
                 using (var server = new RouterSocket("inproc://async"))
                 using (var client = new DealerSocket("inproc://async"))
@@ -64,7 +64,7 @@ namespace NetMQ.Tests
                     req.Append("Hello");
                     req.Append(new byte[]{ 0x00, 0x01, 0x02, 0x03 });
 
-                    client.SendMultipartMessage(req);
+                    await client.SendMultipartMessageAsync(req);
 
                     NetMQMessage received = await server.ReceiveMultipartMessageAsync();
                     Assert.Equal("Hello", received[1].ConvertToString());
@@ -74,7 +74,7 @@ namespace NetMQ.Tests
 
             using (var runtime = new NetMQRuntime())
             {
-                var t = ReceiveAsync();
+                var t = SendReceiveAsync();
                 runtime.Run(t);
 
                 if (t.IsFaulted && t.Exception is AggregateException exc)

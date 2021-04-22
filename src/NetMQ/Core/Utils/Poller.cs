@@ -286,6 +286,9 @@ namespace NetMQ.Core.Utils
 #else
                     if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
                     {
+                        // Specify timeout for macOS Catalina.
+                        timeout = 1000;
+
                         // Socket.Select does not work properly on macOS .NET Core when readList and errorList are passed
                         // together. To avoid this problem, we call the Select function separately for errorList.
                         // Please refer to this issue: https://github.com/dotnet/corefx/issues/39617
