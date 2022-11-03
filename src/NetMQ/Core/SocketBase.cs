@@ -1249,8 +1249,15 @@ namespace NetMQ.Core
                     // Check whether TSC haven't jumped backwards (in case of migration
                     // between CPU cores) and whether certain time have elapsed since
                     // last command processing. If it didn't do nothing.
-                    if (tsc >= m_lastTsc && tsc - m_lastTsc <= Config.MaxCommandDelay)
+                    
+                    // 5ms interval
+                    const long MinInterval = 5L;
+                    if (tsc - m_lastTsc <= MinInterval)
+                    {
                         return;
+                    }
+                    // Output log to android logcat
+                    // System.Console.WriteLine($"Invoke SocketBase.ProcessCommands(), Interval={tsc - m_lastTsc}ms");
                     m_lastTsc = tsc;
                 }
 

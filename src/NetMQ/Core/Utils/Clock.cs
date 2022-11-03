@@ -32,7 +32,7 @@ namespace NetMQ.Core.Utils
         /// <summary>
         /// TSC timestamp of when last time measurement was made.
         /// </summary>
-        private static long s_lastTsc;
+        private static long s_lastTsc = 0L;
 
         /// <summary>
         /// Physical time corresponding to the TSC above (in milliseconds).
@@ -88,32 +88,23 @@ namespace NetMQ.Core.Utils
         public static long NowMs()
         {
             long tsc = Rdtsc();
-
-            if (tsc == 0)
-            {
-                return NowUs() / 1000;
-            }
-
-            if (tsc - s_lastTsc <= Config.ClockPrecision / 2 && tsc >= s_lastTsc)
-            {
-                return s_lastTime;
-            }
-
             s_lastTsc = tsc;
-            s_lastTime = NowUs() / 1000;
-            return s_lastTime;
+            return tsc;
         }
 
         /// <summary>
-        /// Return the CPU's timestamp counter, or 0 if it's not available.
+        /// Return timestamp in milliseconds.<para />
+        /// On Android, CPU's timestamp is invalid and could make app crash.<para />
+        /// <see href="https://learn.microsoft.com/en-us/dotnet/api/system.datetime.now?view=net-6.0#remarks">
+        ///     Change it to use System.DateTime (click to see doc)
+        /// </see>
         /// </summary>
         public static long Rdtsc()
         {
-#if NETSTANDARD1_6
-            return 0;
-#else
-            return s_rdtscSupported ? (long?)Opcode.Rdtsc?.Invoke() ?? 0 : 0;
-#endif
+            DateTime dateTime = DateTime.Now;
+            TimeSpan span = dateTime - DateTime.MinValue;
+            long stamp = (long)(span.TotalSeconds * 1000d);
+            return stamp;
         }
     }
 }
